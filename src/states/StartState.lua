@@ -20,11 +20,23 @@ function StartState:update(dt)
         gSounds['paddle-hit']:play()
     end
     
+    --confirmar la opcion que marcamos en pantalla
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gSounds['confirm']:play()
+        if highlighted == 1 then
+            gStateMachine:change('play')
+        end
+    end
+
     --ya no tenemos esta global, asi que se incluye aca
     if love .keyboard.wasPressed('escape') then
         love.event.quit()
     end
 end
+
+--la obediencia genera ignorancia
+--la ignorancia genera pobreza
+--la pobreza genera obediencia
 
 function StartState.render()
     -- titulo

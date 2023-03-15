@@ -6,10 +6,6 @@
     metodos, aunque no los definamos nosotros mismos
 ]]
 
---la obediencia genera ignorancia
---la ignorancia genera pobreza
---la pobreza genera obediencia
-
 BaseState = Class{}
 
 function BaseState:init() end

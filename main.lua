@@ -1,9 +1,9 @@
 require 'src/Dependencies'
+
 --[[
     llamado solo una vez al comienzo del juego;
     usado para setear los objetos, variables, etc. y preparar el mundo del juego
 ]]
-
 function love.load()
     --setear el filtro a 'nearest-neighbor', para un verdadero look retro
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -30,15 +30,28 @@ gTextures= {
     ['particle'] = love.graphics.newImage('graphics/particle.png')
 }
 
---inicializar nuestra resolucion virtual, la cual sera renderizada en nuestra ventana,
---sin importar sus dimensiones
+--[[
+    los Quads que vamos a generar para todas nuestras texturas, ellos nos permite mostrar
+    solo parte de una textura, e vez de mostrarla toda
+]]
+gFrames = {
+    ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
+}
 
+--[[
+    inicializar nuestra resolucion virtual, la cual sera renderizada en nuestra ventana,
+    sin importar sus dimensiones
+]]
 push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
     vsync = true,
     fullscreen = false,
     resizable = true
 })
 
+--[[
+    setear nuestros efectos de sonido; despues podemos simplemente indexar esta tabla y llamar
+    el motodo 'play' de cada entrada
+]]
 gSounds = {
     ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav', 'static'),
     ['score'] = love.audio.newSource('sounds/score.wav', 'static'),
@@ -70,10 +83,9 @@ gSounds = {
     5.'victory'(se termino el nivel, con un jingle de victoria)
     6.'game-over'(el jugador perdio; mostrar puntaje y pernitir el restart)
 ]]
-
-
 gStateMachine = StateMachine {
-    ['start'] = function() return StartState() end
+    ['start'] = function() return StartState() end,
+    ['play'] = function() return PlayState() end
 }
 
 gStateMachine:change('start')
