@@ -45,7 +45,16 @@ function PlayState:update(dt)
 
     if self.ball:collides(self.paddle) then
         -- revertir la velocidad y si se detecta colision entre la pelota y la paleta
+        self.ball.y = self.paddle.y -8
         self.ball.dy = -self.ball.dy
+
+        if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
+            self.ball.dx = -50 + -(8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
+
+        elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
+            self.ball.dx = 50 + (8* math.abs(self.paddle.x + self.paddle.width / 2 - self.ball.x))
+        end
+
         gSounds['paddle-hit']:play()
     end
 
@@ -57,6 +66,46 @@ function PlayState:update(dt)
             
             --gatillar la funcion hit del ladrillo, que lo saca de juego
             brick:hit()
+--[[
+    codigo de collision para ladrillos
+    revisamos si el lado opuesto de nuestra velocidad esta fuera del ladrillo; si es asi, gatillamos
+    la colision de ese lado. Sino mientras estemos dentro de x + ancho del ladrillo y deberia revisar
+    si la parte superior o inferior esta fuera del ladrillo, colisionando correctamente con ambas. 
+]]
+
+            --borde izquierdo; checkear solo si nos movemos a la derecha
+            if self.ball.x + 2 < brick.x and self.ball.dx > 0 then
+                
+                --invertir velocidad x y resetear poscicion afuera del ladrillo
+                self.ball.dx = - self.ball.dx
+                self.ball.x = brick.x - 8
+                
+                --borde derecho; solo checkear si nos estamos moviendo a la izquierda
+            elseif self.ball.x + 6 > brick.x + brick.width and self.ball.dx < 0 then
+
+                --invertir velocidad x y resetear la poscicion fuera del ladrillo
+                self.ball.dx = -self.ball.dx
+                self.ball.x = brick.x + 32
+
+            -- top edge if no X collisions, always check
+             elseif self.ball.y < brick.y then   
+
+                -- flip y velocity and reset position outside of brick
+                self.ball.dy = -self.ball.dy
+                self.ball.y = brick.y - 8
+                
+                --El borde del fondo si no hay colisiones en x ni arriba, ultima posibilidad
+            else
+                -- invertir la velocidad en y; resetear la poscicion fuera del ladrillo
+                self.ball.dy = -self.ball.dy
+                self.ball.y = brick.y + 16
+            end
+
+            --cambiar ligeramente la velocidad en y para acelerar el juego
+            self.ball.dy = self.ball.dy * 1.02
+
+            --permite collisionar son un ladrillo a la vez, por las esquinas
+            break
         end
     end
 
