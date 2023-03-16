@@ -11,7 +11,7 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     local spritesheet = {}
 
     for y = 0, sheetHeight - 1 do
-        for x = 0, sheetWidth, - 1 do
+        for x = 0, sheetWidth - 1 do
             spritesheet[sheetCounter] =
                 love.graphics.newQuad(x * tilewidth, y * tileheight, tilewidth,
                 tileheight, atlas:getDimensions())
@@ -35,11 +35,19 @@ function table.slice(tbl, first, last, step)
 end
 
 --[[
+    Esta funcion esta hecha especigicamente para armar la pared, desde la sprite sheet
+    Dado que la hoja tiene sprites de tamaños irregulares, tenemos que devolver
+    un sub-set de GenerateQuads
+]]
+function GenerateQuadsBricks(atlas)
+    return table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
+end
+
+--[[
     esta funcion esta echa especificamente para armar las paletas desde la hoja de sprites.
     para esto necesitamos armarlas de una manera un poco mas manual,
     ya que son todas de diferentes tamaños
 ]]
-
 function GenerateQuadsPaddles(atlas)
     local x = 0
     local y = 64
@@ -68,6 +76,36 @@ function GenerateQuadsPaddles(atlas)
         -- prepare X and Y for the next set of paddles
         x = 0
         y = y + 32
+    end
+    
+    return quads
+end
+
+--[[
+    esta funcion esta echa espedificamente para recortar las pelotitas de la hoja.
+    Para esto tnemos que tomar las pelotitas de un modo un poco mas manual,
+    ya que estan en una parte incomoda de la hoja y son muy pequeñas
+]]
+function GenerateQuadsBalls(atlas)
+    local x = 96
+    local y = 48
+
+    local counter = 1
+    local quads = {}
+
+    for i = 0, 3 do
+        quads[counter] = love.graphics.newQuad(x, y, 8, 8, atlas:getDimensions())
+        x = x + 8
+        counter = counter + 1
+    end
+
+    x = 96
+    y = 56
+
+    for i = 0, 2 do
+        quads[counter] = love.graphics.newQuad(x, y, 8, 8, atlas:getDimensions())
+        x = x + 8
+        counter = counter + 1
     end
 
     return quads

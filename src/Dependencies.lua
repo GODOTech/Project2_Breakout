@@ -13,6 +13,15 @@ Class = require 'lib/class'
 -- un par de constantes globales, centralizadas
 require 'src/constants'
 
+-- La pelotita que rebota por ahi, rompiendo ladrillos y bajando vidas
+require 'src/Ball'
+
+-- Entidades en nuestro mapa de juego, que nos dan puntos por colisionar contra ellos
+require 'src/Brick'
+
+-- Una clacse generada para hacer arreglos de ladrillo
+require 'src/LevelMaker'
+
 -- La entidad rectnagular de los controles del jugador, que rebotan la pelota
 require 'src/Paddle'
 

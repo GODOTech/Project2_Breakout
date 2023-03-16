@@ -35,7 +35,9 @@ gTextures= {
     solo parte de una textura, e vez de mostrarla toda
 ]]
 gFrames = {
-    ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
+    ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
+    ['balls'] = GenerateQuadsBalls(gTextures['main']),
+    ['bricks'] = GenerateQuadsBricks(gTextures['main'])
 }
 
 --[[

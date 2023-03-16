@@ -34,10 +34,6 @@ function StartState:update(dt)
     end
 end
 
---la obediencia genera ignorancia
---la ignorancia genera pobreza
---la pobreza genera obediencia
-
 function StartState.render()
     -- titulo
     love.graphics.setFont(gFonts['large'])
