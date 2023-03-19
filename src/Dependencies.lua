@@ -43,5 +43,7 @@ require 'src/Util'
     nuestra maquina de estados, cada cuadro, para evitar hacer bulto de codigo en main.lua
 ]]
 require 'src/states/BaseState'
+require 'src/states/GameOverState'
 require 'src/states/PlayState'
+require 'src/states/ServeState'
 require 'src/states/StartState'

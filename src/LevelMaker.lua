@@ -2,9 +2,9 @@
     crea niveles aleatorios. devuelve una tabla de ladrillos 
     que el juego puede renderizar, basado en el nivel actual
 ]]
-levelMaker = Class{}
+LevelMaker = Class{}
 
-function levelMaker.createMap(level)
+function LevelMaker.createMap(level)
     local bricks = {}
 
     -- Elegir aleatoriamente el numero de filas

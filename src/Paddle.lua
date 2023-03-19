@@ -9,7 +9,7 @@ Paddle = Class{}
     Nuestra paleta inicilizara en el mismo lugar cada vez, en el medio horizontal del mundo,
     cerca del fondo de la pantalla.
 ]]
-function Paddle:init()
+function Paddle:init(skin)
     --x is pusta en el medio
     self.x = VIRTUAL_WIDTH / 2 -32
     
@@ -24,7 +24,7 @@ function Paddle:init()
     self.height = 16
 
     --el skin solo cambia el color, usado para cambiar la tabla gPaddleSkins mas tarde
-    self.skin = 1
+    self.skin = skin
 
     --la variante es cual de los 4 tamaños tiene; 2 es la del cominzo, la chica es mas dificil
     self.size = 2
