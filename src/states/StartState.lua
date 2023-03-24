@@ -23,10 +23,11 @@ function StartState:update(dt)
     --confirmar la opcion que marcamos en pantalla
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gSounds['confirm']:play()
+
         if highlighted == 1 then
             gStateMachine:change('serve', {
                 paddle = Paddle(1),
-                bricks = LevelMaker.createMap(),
+                bricks = LevelMaker.createMap(1),
                 health = 3,
                 score = 0
             })

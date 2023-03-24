@@ -6,7 +6,6 @@ function StateMachine:init(states)
         update= function() end,
         enter = function() end,
         exit = function() end
-        
     }
     self.states = states or {} --[name] -> [funcion que devuelve estados]
     self.current = self.empty

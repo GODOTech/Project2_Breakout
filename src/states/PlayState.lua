@@ -57,6 +57,9 @@ function PlayState:update(dt)
 
         --solo preguntar colision si el ladrillo esta en juego
         if brick.inPlay and self.ball:collides(brick) then
+
+            -- sumar puntos
+            self.score = self.score + 10
             
             --gatillar la funcion hit del ladrillo, que lo saca de juego
             brick:hit()
