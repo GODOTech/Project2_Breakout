@@ -26,8 +26,31 @@ end
 ]]
 
 function Brick:hit()
+    gSounds['brick-hit-2']:stop()
     gSounds['brick-hit-2']:play()
-    self.inPlay = false
+
+    --Si estamos en un tier alto, bajamos uno
+    --Si estmos en el color mas bajo, bajamos un color
+    if self.tier > 0 then
+        if sellf.color == 1 then
+            self.tier = self.tier - 1
+            self.color = 5
+        else
+            self.color = self.color - 1
+        end
+    else
+        --Si estamos en el nivel mas bajo y en el color base, quitar el ladrillo
+        if self.color == 1 then
+            self.inPlay = false
+        else
+            self.color = self.color - 1
+        end
+    end
+    --Otro sonido si el ladrillo es destruido
+    if not self.inPlay then
+        gSounds['brick-hit-1']:stop()
+        gSounds['brick-hit-1']:play()
+    end
 end
 
 
