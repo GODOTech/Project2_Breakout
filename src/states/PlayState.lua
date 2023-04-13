@@ -12,8 +12,9 @@ function PlayState:enter(params)
         self.health = params.health
         self.score = params.score
         self.ball = params.ball
+        self.level = params.level
     
-        -- give ball random starting velocity
+        -- darle a la pelotita una velocidad de inicio aleatoria
         self.ball.dx = math.random(-200, 200)
         self.ball.dy = math.random(-50, -60)
 end
@@ -63,6 +64,20 @@ function PlayState:update(dt)
             
             --gatillar la funcion hit del ladrillo, que lo saca de juego
             brick:hit()
+
+            --Ir a la pantalla de victoria si no hay mas ladrillitos
+            if self:checkVictory() then
+                gSounds['victory']:play()
+
+                gStateMachine:change('victory', {
+                    level = self.level,
+                    paddle = self.paddle,
+                    health = self.health,
+                    score = self.score,
+                    ball = self.ball
+                })
+            end
+
 --[[
     codigo de collision para ladrillos
     revisamos si el lado opuesto de nuestra velocidad esta fuera del ladrillo; si es asi, gatillamos
@@ -120,7 +135,8 @@ function PlayState:update(dt)
                 paddle = self.paddle,
                 bricks = self.bricks,
                 health = self.health,
-                score = self.score
+                score = self.score,
+                level = self.level
             })
         end
     end
@@ -159,4 +175,13 @@ function PlayState:render()
         love.graphics.setFont(gFonts['large'])
         love.graphics.printf('PAUSA', 0, VIRTUAL_HEIGHT / 2 -16, VIRTUAL_WIDTH, 'center')
     end
+end
+
+function PlayState:checkVictory()
+    for k, brick in pairs(self.bricks) do
+        if brick.inPlay then
+            return false
+        end
+    end
+    return true
 end
