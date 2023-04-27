@@ -76,8 +76,8 @@ function LevelMaker.createMap(level)
             
             b = Brick(
                 --coordenada x
-            (x-1)                       --reducir x por 1 porque las tablas estan 1-indexadas las coordenadas son 0 
-            * 32                        --multiplicar por 32, el ancho del ladrillo
+                (x-1)                       --reducir x por 1 porque las tablas estan 1-indexadas las coordenadas son 0 
+                * 32                        --multiplicar por 32, el ancho del ladrillo
                 + 8                     --la pantalla debe tener 8 pixeles de relleno; podemos acoplar 13 cols + 16 pixeles toatal
                 + (13 - numCols) * 16,  --relleno del lado izquierdo para cuando hay menos de 13 columnas
 

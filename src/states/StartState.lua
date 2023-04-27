@@ -13,6 +13,10 @@ StartState = Class{__includes = BaseState}
 -- si es que tenemos resaltado 'Start' o 'High Scores'
 local highlighted = 1
 
+function StartState:enter(params)
+    self.highScores = params.highScores
+end
+
 function StartState:update(dt)
     --cambiar la opcion resaltada si presionamos "ariba" o "abajo"
     if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
@@ -30,7 +34,12 @@ function StartState:update(dt)
                 bricks = LevelMaker.createMap(1),
                 health = 3,
                 score = 0,
+                highScores = self.highScores,
                 level = 1
+            })
+        else
+            gStateMachine:change('high-scores', {
+                highScores = self.highScores
             })
         end
     end

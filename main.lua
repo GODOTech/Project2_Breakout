@@ -91,10 +91,14 @@ gStateMachine = StateMachine {
     ['play'] = function() return PlayState() end,
     ['serve'] = function() return ServeState() end,
     ['game-over'] = function() return GameOverState() end,
-    ['victory'] = function() return VictoryState() end
+    ['victory'] = function() return VictoryState() end,
+    ['high-scores'] = function() return HighScoreState() end,
+    ['enter-high-score'] = function () return EnterHighScoreState() end
 }
 
-gStateMachine:change('start')
+gStateMachine:change('start', {
+    highScores = loadHighScores()
+})
 
 --[[
     una tabla que vamos a utilizar para llevar registro de que teclas fueron presionadas
@@ -178,6 +182,57 @@ function love.draw()
     --displayFPS()
 
     push:apply('end')
+end
+
+
+--[[
+    Cargar los ´high scores´ desde un archivo lst, guardado en el directorio de guardado
+    por defecto de LÖVE2D en una subcarpeta llamada 'breakout'
+]]
+function loadHighScores()
+    love.filesystem.setIdentity('breakout')
+
+    --Si el archivo no existe, inicializarlo con algunos puntajes por defecto
+    if not love.filesystem.getInfo('breakout.lst') then
+        local scores = ''
+        for i = 10, 1, -1 do
+            scores = scores .. 'CTO\n'
+            scores = scores .. tostring(i*1000) .. '\n'
+        end
+
+        love.filesystem.write('breakout.lst', scores)
+    end
+    
+    --Marcar si es que estamos leyendo un nombre o no
+    local name = true
+    local currentname = nil
+    local counter = 1
+
+    --inicializar los puntajes con por lo menos 10 entradas vacias
+    local scores = {}
+
+    for i = 1, 10 do
+        --Tabla en blanco; cada una con un nombre y un numero
+        scores[i] = {
+            name = nil,
+            score = nil
+        }
+    end
+
+    --Iterar por cada linea en el archivo, llenando nombres y puntos
+    for line in love.filesystem.lines('breakout.lst') do
+        if name then
+            scores[counter].name = string.sub(line, 1, 3)
+        else
+            scores[counter].score = tonumber(line)
+            counter = counter + 1
+        end
+
+        --voltear la marca del nombre
+        name = not name        
+    end
+
+    return scores
 end
 
 function renderHealth(health)
