@@ -32,18 +32,18 @@ function HighScoreState:render()
 
         -- numero del puntaje (1-10)
         love.graphics.printf(tostring(i) .. '.', VIRTUAL_WIDTH / 4,
-        60 + i * 13, 50, 'left')
+            60 + i * 13, 50, 'left')
 
         --nombre del puntaje 
-        love.graphics.printf(name, VIRTUAL_WIDTH / 4 + 38,
-        60 + i * 13, 50, "right")
+        love.graphics.printf(name, VIRTUAL_WIDTH / 4 + 38, 
+            60 + i * 13, 50, 'right')
 
         --el puntaje en si mismo
-        love.graphics.printf(name, VIRTUAL_WIDTH / 4 + 38,
-        60 + i * 13, 100, "right")
+        love.graphics.printf(tostring(score), VIRTUAL_WIDTH / 2,
+            60 + i * 13, 100, 'right')
     end
     
     love.graphics.setFont(gFonts['small'])
-    love.graphics.printf('Press escape to return to the main menu',
+    love.graphics.printf('Presiona ¨ESC¨ para volver',
     0, VIRTUAL_HEIGHT - 18, VIRTUAL_WIDTH, 'center')
 end

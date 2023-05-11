@@ -57,7 +57,7 @@ function StartState.render()
     if highlighted == 1 then
         love.graphics.setColor(103/255, 1, 1, 1)
     end
-    love.graphics.printf("COMEZAR", 0, VIRTUAL_HEIGHT / 2 +70, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf("COMENZAR", 0, VIRTUAL_HEIGHT / 2 +70, VIRTUAL_WIDTH, 'center')
 
     --resetear color
     love.graphics.setColor(1, 1, 1, 1)

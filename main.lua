@@ -96,18 +96,22 @@ gStateMachine = StateMachine {
     ['high-scores'] = function() return HighScoreState() end,
     ['enter-high-score'] = function () return EnterHighScoreState() end,
     ['paddle-select'] = function() return PaddleSelectState() end
-}
+    }
 
-gStateMachine:change('start', {
-    highScores = loadHighScores()
-})
+    gStateMachine:change('start', {
+        highScores = loadHighScores()
+    })
+
+-- tocar la musica fuera de todos los estados y setearla a bucle
+    gSounds['music']:play()
+    gSounds['music']:setLooping(true)
 
 --[[
     una tabla que vamos a utilizar para llevar registro de que teclas fueron presionadas
     en este cuadro, para circumbalar el echo de que el llamado por defecto de LÖVE
     no nos dejaria probar un input desde dentro de otras funciones 
 ]]
-love.keyboard.keysPressed = {}
+    love.keyboard.keysPressed = {}
 end
 
 --[[
@@ -231,7 +235,7 @@ function loadHighScores()
         end
 
         --voltear la marca del nombre
-        name = not name        
+        name = not name
     end
 
     return scores
