@@ -37,7 +37,7 @@ function EnterHighScoreState:update(dt)
         self.highScores[self.scoreIndex].score = self.score
 
         --Escribir los puntos en el archivo
-        local scoreStr = ''
+        local scoresStr = ''
 
         for i = 1, 10 do
             scoresStr = scoresStr .. self.highScores[i].name .. '\n'
